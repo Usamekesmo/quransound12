@@ -134,7 +134,18 @@ async function handleUserLogin(userName) {
 }
 
 async function getUserData(userName) {
-    const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=getUserData&userName=${encodeURIComponent(userName)}`);
+    const response = await fetch(GOOGLE_SHEET_API_URL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'getUserData',
+            userName: userName
+        })
+    });
+
     if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
     }
@@ -146,6 +157,7 @@ async function getUserData(userName) {
     if (data.lastRewardDate) data.lastRewardDate = new Date(data.lastRewardDate).toDateString();
     return data;
 }
+
 
 async function saveUserData(userData) {
     if (!AppState.currentUser) return;
@@ -783,3 +795,4 @@ const shuffleArray = array => {
     }
     return array;
 };
+
