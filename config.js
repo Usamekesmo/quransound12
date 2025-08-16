@@ -7,7 +7,7 @@
  * رابط تطبيق الويب المنشور على Google Apps Script
  * !!! مهم: استبدل هذا الرابط بالرابط الذي حصلت عليه بعد النشر !!!
  */
-export const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbxKOq659JArM9wiTDFh0duQ6CydkYt5lYKHYpHxAsZX-b2LTr3tSbYpve4KV9eEc1RG/exec'; // <--- استبدل هذا
+export const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/ABCDEFG-YOUR-UNIQUE-ID/exec'; // <--- استبدل هذا
 
 /**
  * نقاط النهاية للواجهات البرمجية (APIs ) لجلب بيانات القرآن
@@ -58,5 +58,3 @@ export const MOTIVATION_CONFIG = {
         perfectScore: "تبارك الله! درجة كاملة، إتقان تام!"
     }
 };
-
-
