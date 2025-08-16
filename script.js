@@ -1,4 +1,4 @@
-  // =================================================================================
+// =================================================================================
 //  رفيق الحفظ المتقدم - ملف الجافاسكريبت الرئيسي (نسخة مطورة مع Google Sheets)
 // =================================================================================
 
@@ -57,9 +57,9 @@ const copyChallengeBtn = document.getElementById('copy-challenge-btn');
 // --- 2. كائن الحالة الموحد (Single State Object) ---
 let AppState = {
     currentUser: null,
-    lastUsedName: localStorage.getItem('lastUserName'), // سنبقي هذا فقط لراحة المستخدم
+    lastUsedName: localStorage.getItem('lastUserName'),
     theme: localStorage.getItem('theme') || 'light',
-    userData: null, // سيتم تخزين بيانات المستخدم هنا بعد جلبها
+    userData: null,
     pageData: {
         number: null,
         ayahs: [],
@@ -99,7 +99,7 @@ showFinalResultButton.addEventListener('click', () => {
     errorReviewScreen.classList.add('hidden');
     showResults();
 });
-userNameInput.addEventListener('change', async () => { // نستخدم change بدلاً من input لتجنب كثرة الطلبات
+userNameInput.addEventListener('change', async () => {
     await handleUserLogin(userNameInput.value);
 });
 backToStartBtn.addEventListener('click', showStartScreen);
@@ -107,7 +107,6 @@ copyChallengeBtn.addEventListener('click', copyChallengeLink);
 
 
 // --- 5. Core User Data & UI Management ---
-
 async function handleUserLogin(userName) {
     if (!userName) {
         AppState.currentUser = null;
@@ -243,7 +242,6 @@ function showStartScreen() {
 }
 
 // --- 6. هياكل التحميل (Loading Skeletons) ---
-
 function showQuestionSkeleton() {
     questionArea.innerHTML = `
         <h3>السؤال ${AppState.currentQuiz.questionIndex + 1}</h3>
@@ -255,7 +253,6 @@ function showQuestionSkeleton() {
 }
 
 // --- 7. Core Quiz Functions ---
-
 async function startStandardTest() {
     if (!AppState.currentUser || !AppState.userData) {
         alert('الرجاء إدخال اسمك أولاً.');
@@ -336,7 +333,7 @@ function displayQuestion() {
     showQuestionSkeleton();
 
     setTimeout(() => {
-        const randomType = shuffleArray(QUIZ_CONFIG.questionTypes)[0];
+        const randomType = shuffleArray([...QUIZ_CONFIG.questionTypes])[0];
         try {
             const questionGenerators = {
                 'chooseNext': generateChooseNextQuestion,
@@ -469,7 +466,7 @@ async function showResults() {
 }
 
 function grantDailyReward() {
-    const reward = shuffleArray(MOTIVATION_CONFIG.dailyRewards)[0];
+    const reward = shuffleArray([...MOTIVATION_CONFIG.dailyRewards])[0];
     rewardText.textContent = reward.text;
     if (reward.type === 'xp') {
         AppState.userData.xp += reward.value;
@@ -527,7 +524,6 @@ function generateChallengeLink() {
 }
 
 // --- 8. Advanced Feature Functions ---
-
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     AppState.theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
@@ -547,7 +543,7 @@ async function startSmartReview() {
         .map(([page]) => parseInt(page));
     
     if (weakPages.length > 0) {
-        pageToReview = weakPages[Math.floor(Math.random() * weakPages.length)];
+        pageToReview = shuffleArray(weakPages)[0];
         alert(`المراجعة الذكية: سنراجع اليوم صفحة ${pageToReview} لأنها تحتاج لبعض التركيز.`);
     } else {
         pageToReview = Math.floor(Math.random() * 604) + 1;
@@ -602,7 +598,6 @@ async function showMeaning() {
 function showMotivationalMessage(type) {
     const message = MOTIVATION_CONFIG.motivationalMessages[type];
     if (message) {
-        // لا تظهر رسالة تحفيزية إذا كانت هناك رسالة خطأ أو صواب بالفعل
         if (feedbackArea.classList.contains('hidden')) {
             feedbackArea.textContent = message;
             feedbackArea.className = 'motivational-feedback';
@@ -653,7 +648,6 @@ function showAdvancedStats() {
 }
 
 // --- 9. All Question Generators ---
-
 function addChoiceListeners(correctAnswerText, questionAyah) {
     questionArea.querySelectorAll('.choice-box, .option-div').forEach(el => {
         if (el.dataset.listenerAttached) return;
@@ -678,7 +672,7 @@ async function generateChooseNextQuestion() {
     const correctNextAyah = pageAyahs[startIndex + 1];
     const audioSrc = await getAyahAudio(questionAyah);
     let wrongOptions = pageAyahs.filter(a => a.number !== correctNextAyah.number && a.number !== questionAyah.number);
-    wrongOptions = shuffleArray(wrongOptions).slice(0, 2);
+    wrongOptions = shuffleArray([...wrongOptions]).slice(0, 2);
     const options = shuffleArray([correctNextAyah, ...wrongOptions]);
     questionArea.innerHTML = `<h3>السؤال ${AppState.currentQuiz.questionIndex + 1}: اختر الآية التالية</h3>
         <p style="font-family: 'Amiri', serif; font-size: 22px; border: 1px solid var(--border-color); padding: 10px; border-radius: 5px;">${questionAyah.text}</p>
@@ -695,7 +689,7 @@ async function generateChoosePreviousQuestion() {
     const correctPreviousAyah = pageAyahs[startIndex - 1];
     const audioSrc = await getAyahAudio(questionAyah);
     let wrongOptions = pageAyahs.filter(a => a.number !== correctPreviousAyah.number && a.number !== questionAyah.number);
-    wrongOptions = shuffleArray(wrongOptions).slice(0, 2);
+    wrongOptions = shuffleArray([...wrongOptions]).slice(0, 2);
     const options = shuffleArray([correctPreviousAyah, ...wrongOptions]);
     questionArea.innerHTML = `<h3>السؤال ${AppState.currentQuiz.questionIndex + 1}: اختر الآية السابقة</h3>
         <p style="font-family: 'Amiri', serif; font-size: 22px; border: 1px solid var(--border-color); padding: 10px; border-radius: 5px;">${questionAyah.text}</p>
@@ -715,4 +709,77 @@ async function generateLocateAyahQuestion() {
     else if (ayahIndex < (totalAyahs * 2) / 3) correctLocation = 'وسط';
     else correctLocation = 'نهاية';
     questionArea.innerHTML = `<h3>السؤال ${AppState.currentQuiz.questionIndex + 1}: أين يقع موضع هذه الآية؟</h3>
-        <p style="font-family: 'Amiri', serif; font-size: 22px; border: 1px solid var(--border-color); padding: 10px; border-radius: 5px;">${
+        <p style="font-family: 'Amiri', serif; font-size: 22px; border: 1px solid var(--border-color); padding: 10px; border-radius: 5px;">${questionAyah.text}</p>
+        ${audioSrc ? `<audio controls src="${audioSrc}"></audio>` : ''}
+        <div class="interactive-area">${['بداية', 'وسط', 'نهاية'].map(loc => `<div class="choice-box" data-correct="${loc === correctLocation}">${loc} الصفحة</div>`).join('')}</div>`;
+    addChoiceListeners(`${correctLocation} الصفحة`, questionAyah);
+}
+
+async function generateCompleteAyahQuestion() {
+    const pageAyahs = AppState.pageData.ayahs;
+    const longAyahs = pageAyahs.filter(a => a.text.split(' ').length > 8);
+    if (longAyahs.length < 3) return generateChooseNextQuestion();
+    const questionAyah = shuffleArray([...longAyahs])[0];
+    const audioSrc = await getAyahAudio(questionAyah);
+    const words = questionAyah.text.split(' ');
+    const splitPoint = Math.floor(words.length / 2);
+    const firstHalfText = words.slice(0, splitPoint).join(' ');
+    const correctSecondHalf = words.slice(splitPoint).join(' ');
+    const wrongAyahs = pageAyahs.filter(a => a.number !== questionAyah.number);
+    const wrongOptions = shuffleArray([...wrongAyahs]).slice(0, 2).map(a => {
+        const wrongWords = a.text.split(' ');
+        return wrongWords.slice(Math.floor(wrongWords.length / 2)).join(' ');
+    });
+    const options = shuffleArray([correctSecondHalf, ...wrongOptions]);
+    questionArea.innerHTML = `<h3>السؤال ${AppState.currentQuiz.questionIndex + 1}: أكمل الآية</h3>
+        <p style="font-family: 'Amiri', serif; font-size: 22px;">"${firstHalfText}..."</p>
+        ${audioSrc ? `<audio controls src="${audioSrc}"></audio>` : ''}
+        ${options.map(opt => `<div class="option-div" data-correct="${opt.replace(/'/g, "\\'") === correctSecondHalf.replace(/'/g, "\\'")}">${opt}</div>`).join('')}`;
+    addChoiceListeners(correctSecondHalf, questionAyah);
+}
+
+async function generateCompleteLastWordQuestion() {
+    const pageAyahs = AppState.pageData.ayahs;
+    const suitableAyahs = pageAyahs.filter(a => a.text.split(' ').length > 3);
+    if (suitableAyahs.length < 4) return generateChooseNextQuestion();
+    const questionAyah = shuffleArray([...suitableAyahs])[0];
+    const audioSrc = await getAyahAudio(questionAyah);
+    const words = questionAyah.text.split(' ');
+    const correctLastWord = words.pop();
+    const incompleteAyahText = words.join(' ');
+    const wrongOptions = shuffleArray([...suitableAyahs.filter(a => a.number !== questionAyah.number)]).slice(0, 3).map(a => a.text.split(' ').pop());
+    const options = shuffleArray([correctLastWord, ...wrongOptions]);
+    questionArea.innerHTML = `<h3>السؤال ${AppState.currentQuiz.questionIndex + 1}: أكمل الكلمة الأخيرة</h3>
+        <p style="font-family: 'Amiri', serif; font-size: 22px;">${incompleteAyahText} (...)</p>
+        ${audioSrc ? `<audio controls src="${audioSrc}"></audio>` : ''}
+        <div class="interactive-area">${options.map(opt => `<div class="choice-box" data-correct="${opt === correctLastWord}">${opt}</div>`).join('')}</div>`;
+    addChoiceListeners(correctLastWord, questionAyah);
+}
+
+async function generateLinkStartEndQuestion() {
+    const pageAyahs = AppState.pageData.ayahs;
+    const suitableAyahs = pageAyahs.filter(a => a.text.split(' ').length > 5);
+    if (suitableAyahs.length < 4) return generateChooseNextQuestion();
+    const questionAyah = shuffleArray([...suitableAyahs])[0];
+    const words = questionAyah.text.split(' ');
+    const startText = words.slice(0, 3).join(' ') + '...';
+    const correctEnding = '...' + words.slice(-3).join(' ');
+    const wrongOptions = shuffleArray([...suitableAyahs.filter(a => a.number !== questionAyah.number)])
+        .slice(0, 3)
+        .map(a => '...' + a.text.split(' ').slice(-3).join(' '));
+    const options = shuffleArray([correctEnding, ...wrongOptions]);
+    questionArea.innerHTML = `<h3>السؤال ${AppState.currentQuiz.questionIndex + 1}: اربط بداية الآية بنهايتها</h3>
+        <p style="font-family: 'Amiri', serif; font-size: 22px; border: 1px solid var(--border-color); padding: 10px; border-radius: 5px;">"${startText}"</p>
+        ${options.map(opt => `<div class="option-div" data-correct="${opt === correctEnding}">${opt}</div>`).join('')}`;
+    addChoiceListeners(correctEnding, questionAyah);
+}
+
+// --- 10. Helper Functions ---
+const shuffleArray = array => {
+    // نسخة حديثة من دالة الخلط لضمان العشوائية (Fisher-Yates shuffle)
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+};
