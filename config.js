@@ -58,3 +58,4 @@ export const MOTIVATION_CONFIG = {
         perfectScore: "تبارك الله! درجة كاملة، إتقان تام!"
     }
 };
+
