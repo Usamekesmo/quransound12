@@ -16,9 +16,9 @@
     <!-- شاشة البداية -->
     <div id="start-screen" class="container">
         <h1>رفيق الحفظ المتقدم</h1>
-        <p>أهلاً بك <strong id="welcome-name"></strong>! <span id="user-title" style="color: var(--primary-color); font-weight: bold;"></span></p>
+        <p>أهلاً بك <strong id="welcome-name"></strong>! <span id="user-title" style="color: var(--primary-color ); font-weight: bold;"></span></p>
         
-        <div id="motivation-features">
+        <div id="motivation-features" class="hidden">
             <div class="feature-box">
                 <div class="icon">🔥</div>
                 <p><span id="streak-counter">0</span></p>
@@ -36,17 +36,20 @@
             </div>
         </div>
 
-        <button id="smart-review-btn" class="button-style" style="background-color: var(--secondary-color); color: var(--primary-dark);">🚀 ابدأ المراجعة الذكية</button>
+        <button id="smart-review-btn" class="button-style" style="background-color: var(--secondary-color); color: var(--primary-dark);" disabled>🚀 ابدأ المراجعة الذكية</button>
         
         <hr style="margin: 20px 0;">
 
-        <input type="text" id="userName" placeholder="أدخل اسمك للبدء">
-        <br>
+        <input type="text" id="userName" placeholder="أدخل اسمك للبدء أو المتابعة">
+          
+
         <input type="number" id="pageNumber" placeholder="أو أدخل رقم صفحة (1-604)" min="1" max="604">
         
-        <br><br>
+          
+  
+
         <button id="startButton">ابدأ الاختبار</button>
-        <button id="profileButton" class="button-style" style="background-color: #555;">ملفي الشخصي</button>
+        <button id="profileButton" class="button-style" style="background-color: #555;" disabled>ملفي الشخصي</button>
         <div id="loader" class="loader hidden"></div>
     </div>
 
@@ -107,7 +110,8 @@
             <input type="text" id="challenge-link" readonly>
             <button id="copy-challenge-btn">نسخ الرابط</button>
         </div>
-        <br>
+          
+
         <button onclick="location.reload()">إجراء اختبار جديد</button>
     </div>
 
@@ -144,3 +148,4 @@
     <script src="script.js" type="module"></script>
 </body>
 </html>
+ 
