@@ -7,7 +7,7 @@
  * رابط تطبيق الويب المنشور على Google Apps Script
  * !!! مهم: استبدل هذا الرابط بالرابط الذي حصلت عليه بعد النشر !!!
  */
-export const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbwDWZR2BFNLv6CJ9PIwmhJ12rFeNJm-WHoaDsBcqss28Q6XA5I0HOjOr2m7M7QcY7qr/exec'; // <--- استبدل هذا
+export const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbxsr5byAG0z8zXKHxKXEM9s4v9YnpTL0C_Xf2daJfRJLD1pFZq36c8wB6WNp8K6LSsR/exec'; // <--- استبدل هذا
 
 /**
  * نقاط النهاية للواجهات البرمجية (APIs ) لجلب بيانات القرآن
@@ -58,6 +58,7 @@ export const MOTIVATION_CONFIG = {
         perfectScore: "تبارك الله! درجة كاملة، إتقان تام!"
     }
 };
+
 
 
 
