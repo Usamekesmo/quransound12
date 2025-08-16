@@ -5,10 +5,53 @@
 // --- استيراد الإعدادات من ملف config.js ---
 import { API_ENDPOINTS, QUIZ_CONFIG, MOTIVATION_CONFIG, GOOGLE_SHEET_API_URL } from './config.js';
 
-// --- 1. DOM Element Variables ---
-// ... (هذا الجزء يبقى كما هو، لا تغيير)
+// --- 1. DOM Element Variables (هذا هو الجزء المفقود) ---
 const startScreen = document.getElementById('start-screen');
-// ... (إلى آخر متغير)
+const quizScreen = document.getElementById('quiz-screen');
+const errorReviewScreen = document.getElementById('error-review-screen');
+const resultScreen = document.getElementById('result-screen');
+const profileScreen = document.getElementById('profile-screen');
+const loader = document.getElementById('loader');
+const userNameInput = document.getElementById('userName');
+const pageNumberInput = document.getElementById('pageNumber');
+const startButton = document.getElementById('startButton');
+const profileButton = document.getElementById('profileButton');
+const questionArea = document.getElementById('question-area');
+const feedbackArea = document.getElementById('feedback-area');
+const progressCounter = document.getElementById('progress-counter');
+const progressBar = document.getElementById('progress-bar');
+const errorList = document.getElementById('error-list');
+const showFinalResultButton = document.getElementById('show-final-result-button');
+const challengeLinkInput = document.getElementById('challenge-link');
+const welcomeName = document.getElementById('welcome-name');
+const userTitle = document.getElementById('user-title');
+const profileName = document.getElementById('profileName');
+const resultName = document.getElementById('resultName');
+const finalScore = document.getElementById('finalScore');
+const xpGainedText = document.getElementById('xp-gained-text');
+const smartReviewBtn = document.getElementById('smart-review-btn');
+const hifzHeatmap = document.getElementById('hifz-heatmap');
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+const meaningBtn = document.getElementById('meaning-btn');
+const meaningModal = document.getElementById('meaning-modal');
+const closeMeaningModal = document.getElementById('close-meaning-modal');
+const meaningContent = document.getElementById('meaning-content');
+const advancedStatsContainer = document.getElementById('advanced-stats-container');
+const shareCardBtn = document.getElementById('share-card-btn');
+const hafizCard = document.getElementById('hafiz-card');
+const motivationFeatures = document.getElementById('motivation-features');
+const streakCounter = document.getElementById('streak-counter');
+const xpText = document.getElementById('xp-text');
+const xpBar = document.getElementById('xp-bar');
+const achievementsCounter = document.getElementById('achievements-counter');
+const dailyRewardModal = document.getElementById('daily-reward-modal');
+const closeDailyModal = document.getElementById('close-daily-modal');
+const rewardText = document.getElementById('reward-text');
+const progressTreeContainer = document.getElementById('progress-tree-container');
+const progressTree = document.getElementById('progress-tree');
+const masteredPagesCount = document.getElementById('mastered-pages-count');
+const achievementsContainer = document.getElementById('achievements-container');
+const backToStartBtn = document.getElementById('back-to-start-btn');
 const copyChallengeBtn = document.getElementById('copy-challenge-btn');
 
 
@@ -284,3 +327,4 @@ async function startSmartReview() { // أصبحت async
 
 // --- 10. Helper Functions ---
 // ... (لا تغيير في هذا الجزء)
+
